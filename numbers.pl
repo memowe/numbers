@@ -137,7 +137,7 @@ __DATA__
 <!doctype html><html>
 <head>
 <title>numbers</title>
-<link rel="stylesheet" type="text/css" href="/style.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body onload="document.getElementById('attempt').focus()">
 <div id="content">
