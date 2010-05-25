@@ -5,5 +5,4 @@ numbers
 
     perl numbers.pl daemon
 
-
-    [online]: http://www.netzverwaltung.info/numbers.pl/
+[online]: http://www.netzverwaltung.info/numbers.pl/
