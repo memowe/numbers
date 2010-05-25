@@ -19,6 +19,8 @@ sub submit_class {
 
 app->secret('42');
 
+app->session->default_expiration( 60 * 60 * 24 * 365 * 42 );
+
 # start a game
 get '/' => sub {
     my $self = shift;
