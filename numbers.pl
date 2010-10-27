@@ -10,7 +10,7 @@ sub unisort {
     return sort { $a <=> $b } keys %uniq;
 }
 
-sub submit_class {
+sub submit_type {
     my $attempts = shift;
     return  $attempts < log(MAX)/log(2) * 0.7   ?   'ok'
         :   $attempts < log(MAX)/log(2) * 1.3   ?   'critical'
@@ -37,7 +37,7 @@ get '/' => sub {
         attempts_hi => [],
         attempts    => 0,
         max         => MAX,
-        class       => submit_class(0),
+        type        => submit_type(0),
     );
 
     $self->render('attempt');
@@ -81,7 +81,7 @@ post '/' => sub {
             attempts_hi => [ unisort grep $_ > $number => @$attempts ],
             attempts    => scalar @$attempts,
             max         => MAX,
-            class       => submit_class(scalar @$attempts),
+            type        => submit_type(scalar @$attempts),
         );
     }
 } => 'attempt';
@@ -111,7 +111,7 @@ __DATA__
 </p>
 <form action="<%= url_for 'play' %>" method="post"><p>
     <input type="text" name="attempt" id="attempt">
-    <input type="submit" value="#<%= $attempts + 1 %>" class="<%= $class %>">
+    <input type="submit" value="#<%= $attempts + 1 %>" class="<%= $type %>">
 </p></form>
 
 @@ win.html.ep
@@ -143,8 +143,8 @@ __DATA__
 <div id="content">
 <%== content %>
 <p id="stats">
-    played: <%= $session->{games} || 0 %>,
-    average: <%= sprintf "%.2f", $session->{average} || 0 %>
+    played: <%= session->{games} || 0 %>,
+    average: <%= sprintf "%.2f", session->{average} || 0 %>
 </p>
 </div>
 <address>
