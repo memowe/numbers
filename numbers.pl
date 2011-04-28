@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 
 use Mojolicious::Lite;
-use File::Basename;
 
 use constant MAX => 100;
 
@@ -19,7 +18,7 @@ sub submit_type {
 
 app->secret('42');
 
-app->session->default_expiration( 60 * 60 * 24 * 30 );
+app->sessions->default_expiration( 60 * 60 * 24 * 30 );
 
 # start a game
 get '/' => sub {
@@ -149,7 +148,7 @@ __DATA__
 </div>
 <address>
     &copy; Mirko "memowe" Westermeier
-    &mdash; <%= link_to source => {%>View source<%}%>
+    &mdash; <%= link_to source => begin %>View source<% end %>
 </address>
 </body>
 </html>
