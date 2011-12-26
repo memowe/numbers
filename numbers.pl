@@ -85,12 +85,9 @@ post '/' => sub {
     }
 } => 'attempt';
 
-get '/source' => sub {
-    open my $source, '<', $0 or die $!;
-    shift->stash( source => join '' => <$source> );
-} => 'source';
-
 app->start;
+
+# Web app is done. Below: templates and stylesheets
 
 __DATA__
 
@@ -119,19 +116,6 @@ __DATA__
 <p id="number"><%= $number %></p>
 <p><strong><a href="<%== url_for 'play' %>">Play again!</a></strong></p>
 
-@@ source.html.ep
-% layout 'numbers';
-<h1>The source.</h1>
-<pre><code><%= $source %></code></pre>
-<p>
-    OK, that's enough
-    <a href="http://www.perl.org/">Perl</a>
-    and
-    <a href="http://mojolicious.org/">Mojolicious::Lite</a>
-    for me.
-    <strong><a href="<%== url_for 'play' %>">Let's play!</a></strong>
-</p>
-
 @@ layouts/numbers.html.ep
 <!doctype html><html>
 <head>
@@ -147,8 +131,152 @@ __DATA__
 </p>
 </div>
 <address>
-    &copy; Mirko "memowe" Westermeier
-    &mdash; <%= link_to source => begin %>View source<% end %>
+    &copy; Mirko "memowe" Westermeier &mdash;
+    <a href="https://github.com/memowe/numbers/blob/master/numbers.pl">
+        view source
+    </a>
 </address>
 </body>
 </html>
+
+@@ numbers.css
+body {
+    margin          : 0;
+    padding         : 0;
+    font-family     : Helvetica, Arial, sans-serif;
+    font-size       : 15px;
+}
+
+#content {
+    width           : 600px;
+    margin          : 50px auto 20px;
+    padding         : 50px;
+    background-color: #dde;
+    border-radius   : 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+}
+
+address {
+    width           : 600px;
+    margin          : 20px auto 50px;
+    padding         : 0;
+    font-size       : .8em;
+    color           : gray;
+    background-color: transparent;
+}
+
+a {
+    color           : black;
+}
+
+h1 {
+    color           : white;
+    background-color: transparent;
+    font-size       : 5em;
+    margin          : -56px -50px 20px;
+    padding         : 0 50px 10px;
+    border-bottom   : 30px solid #d2d2e4;
+}
+
+pre {
+    background-color: #f0f0f8;
+    color           : #333;
+    padding         : .8em 1em;
+    margin          : 1em 0;
+    border-radius   : .5em;
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+}
+
+pre code {
+    font-size       : 12px;
+    font-family     : monospace;
+}
+
+#comp {
+    margin          : 0;
+    padding         : .7em 2ex .5em;
+    background-color: white;
+    color           : black;
+    font-size       : 1.5em;
+    text-align      : center;
+    border-radius   : .5em;
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+}
+
+#comp .boundary {
+    color           : #ccc;
+}
+
+#comp strong {
+    font-weight     : bold;
+    font-size       : 1.5em;
+    padding         : 0 1ex;
+}
+
+#number {
+    font-size       : 15em;
+    font-weight     : bold;
+    background-color: white;
+    color           : black;
+    margin          : 0;
+    padding         : .2em .5ex .1em;
+    text-align      : center;
+    border-radius   : .05em;
+    -moz-border-radius: .05em;
+    -webkit-border-radius: .05em;
+}
+
+form p {
+    text-align      : center;
+    font-size       : 2em;
+}
+
+input {
+    font-size       : inherit;
+    width           : 20%;
+    text-align      : center;
+    padding         : .1em;
+    border          : 5px solid #aaa;
+}
+
+input:focus {
+    border-color    : black;
+}
+
+input[type=submit] {
+    color           : #333;
+    text-shadow     : 1px 1px 0px white;
+    background-color: #ddd;
+    cursor          : pointer;
+}
+
+input[type=submit]:hover {
+    border-color    : black;
+}
+
+input.critical {
+    text-decoration : blink;
+    background-color: yellow;
+    color           : black;
+    text-shadow     : none;
+    border-color    : #880;
+}
+
+input.fail {
+    text-decoration : blink;
+    background-color: red;
+    color           : black;
+    text-shadow     : none;
+    border-color    : maroon;
+}
+
+#stats {
+    margin          : 1em -50px 0;
+    padding         : .6em 50px .5em;
+    color           : #666;
+    background-color: #d2d2e4;
+    text-shadow     : 1px 1px 1px #eee;
+}
